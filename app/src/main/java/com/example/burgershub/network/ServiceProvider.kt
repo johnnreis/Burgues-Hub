@@ -22,6 +22,3 @@ class ServiceProvider {
     fun <API> createService(apiCLass: Class<API>) : API = retrofit.create(apiCLass)
 
 }
-
-
-

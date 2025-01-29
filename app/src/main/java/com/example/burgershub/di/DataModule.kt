@@ -8,9 +8,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
-class DataModule {
+@InstallIn(SingletonComponent::class)
+object DataModule {
 
     @Provides
     @Singleton

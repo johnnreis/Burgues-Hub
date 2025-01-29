@@ -3,11 +3,11 @@ package com.example.burgershub.data.mapper
 import com.example.burgershub.data.model.BurgerResponse
 import com.example.burgershub.data.model.ImageResponse
 import com.example.burgershub.data.model.IngredientResponse
-import com.example.burgershub.domain.model.Burguer
+import com.example.burgershub.domain.model.Burger
 import com.example.burgershub.domain.model.Image
 import com.example.burgershub.domain.model.Ingredient
 
-fun BurgerResponse.toDomain() = Burguer(
+fun BurgerResponse.toDomain() = Burger(
     desc = this.desc,
     id = this.id,
     images = this.imagesResponse?.map { it?.toDomain() },

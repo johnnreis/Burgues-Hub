@@ -6,6 +6,6 @@ data class BurgerResponse(
     val imagesResponse: List<ImageResponse?>?,
     val ingredientsResponse: List<IngredientResponse?>?,
     val name: String?,
-    val price: Double?,
+    val price: Float?,
     val veg: Boolean?
 )

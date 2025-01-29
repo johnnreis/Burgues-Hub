@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/burguersFragment"
-        android:name="com.example.burgershub.presenter.burgers.BurguersFragment"
+        android:name="com.example.burgershub.presenter.burgers.BurgersFragment"
         android:label="fragment_burguers"
         tools:layout="@layout/fragment_burguers" >
         <action

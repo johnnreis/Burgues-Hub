@@ -1,11 +1,11 @@
 package com.example.burgershub.domain.model
 
-data class Burguer(
+data class Burger(
     val desc: String?,
     val id: Int?,
     val images: List<Image?>?,
     val ingredients: List<Ingredient?>?,
     val name: String?,
-    val price: Double?,
+    val price: Float?,
     val veg: Boolean?
 )

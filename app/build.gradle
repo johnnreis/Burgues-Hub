@@ -9,6 +9,12 @@ plugins {
 
 }
 
+android.buildFeatures.buildConfig true
+
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
 android {
     namespace 'com.example.burgershub'
     compileSdk 35
@@ -21,6 +27,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", localProperties['BASE_URL'])
     }
 
     buildTypes {
@@ -41,6 +49,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation libs.androidx.core.ktx
@@ -57,12 +66,14 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
+    //LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
 
     //OkHttp
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
-
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")

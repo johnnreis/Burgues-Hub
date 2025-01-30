@@ -55,7 +55,7 @@ class BurgerRepositoryTest {
     @Test
     fun `test getBurgersById returns a Burger for Id`() = runTest {
 
-        val fakeBurgerResponse = BurgerResponse(
+        val fakeBurgerByIdResponse = BurgerResponse(
             desc = "Lorem ispum",
             id = 0,
             imagesResponse = listOf(imageResponseList),
@@ -65,11 +65,25 @@ class BurgerRepositoryTest {
             veg = false
         )
 
-        coEvery { serviceAPI.getBurgersById(1) } returns fakeBurgerResponse
+        coEvery { serviceAPI.getBurgersById(1) } returns fakeBurgerByIdResponse
 
         val resultBurgerById = burgerRepository.getBurgersById(1)
 
-        assertEquals(fakeBurgerResponse, resultBurgerById)
+        assertEquals(fakeBurgerByIdResponse, resultBurgerById)
+
+    }
+
+    @Test
+    fun `test getBurgersName returns a Burger for Name`() = runTest {
+
+        val name = "Cheeseburger"
+
+        coEvery { serviceAPI.getBurgersByName(name) } returns fakeResponse
+
+        val resultBurgersByName = burgerRepository.getBurgersByName(name)
+
+        assertEquals(fakeResponse, resultBurgersByName)
+
 
     }
 

@@ -1,8 +1,10 @@
 package com.example.burgershub
 
+import com.example.burgershub.data.api.ServiceAPI
 import com.example.burgershub.data.model.BurgerResponse
 import com.example.burgershub.data.model.ImageResponse
 import com.example.burgershub.data.model.IngredientResponse
+import com.example.burgershub.data.repository.BurgerRepositoryImpl
 import com.example.burgershub.domain.repository.BurgerRepository
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -13,56 +15,41 @@ import org.junit.Test
 
 class BurgerRepositoryTest {
 
-    // create mock of BurgerRepository
+    // create return of request
+    private lateinit var serviceAPI: ServiceAPI
+
     private lateinit var burgerRepository: BurgerRepository
 
     @Before
-    fun setup() {
-        burgerRepository = mockk()
+    fun setUp() {
+        serviceAPI = mockk()
+        burgerRepository = BurgerRepositoryImpl(serviceAPI)
     }
 
     @Test
-    fun `test for getBurgers if returns list of burgers`() = runTest {
+    fun `test getBurgers returns list of burgers`() = runTest {
 
-        // simulate response API
-        val fakeBurgers = listOf(
-            BurgerResponse("Lorem Ispum",
-                imagesResponse = listOf(ImageResponse(sm = "", lg = "")),
-                id = 1,
-                ingredientsResponse = listOf(
-                    IngredientResponse(
-                        id = 0,
-                        img = "burger image",
-                        name = "BigMac"
-                    )
-                ),
-                name = "",
+        val imageResponseList = ImageResponse(lg = "", sm = "")
+        val ingredientResponseList = IngredientResponse(id = 0, img = "", name = "")
+
+        val fakeResponse = listOf(
+            BurgerResponse(
+                desc = "Lorem ispum",
+                id = 0,
+                imagesResponse = listOf(imageResponseList),
+                ingredientsResponse = listOf(ingredientResponseList),
+                name = "lorem ispum",
                 price = 10.98f,
                 veg = false
-            ),
-            BurgerResponse("Lorem Ispum",
-                imagesResponse = listOf(ImageResponse(sm = "", lg = "")),
-                id = 1,
-                ingredientsResponse = listOf(
-                    IngredientResponse(
-                        id = 0,
-                        img = "burger image",
-                        name = "BigMac"
-                    )
-                ),
-                name = "",
-                price = 10.98f,
-                veg = false
+
             )
-
         )
 
-
-        coEvery { burgerRepository.getBurgers() } returns fakeBurgers
+        coEvery { serviceAPI.getBurgers() } returns fakeResponse
 
         val result = burgerRepository.getBurgers()
 
-        assertEquals(fakeBurgers, result)
+        assertEquals(fakeResponse, result)
 
     }
 

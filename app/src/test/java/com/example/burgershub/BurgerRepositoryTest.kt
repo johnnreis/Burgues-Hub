@@ -17,8 +17,23 @@ class BurgerRepositoryTest {
 
     // create return of request
     private lateinit var serviceAPI: ServiceAPI
-
     private lateinit var burgerRepository: BurgerRepository
+
+    private val imageResponseList = ImageResponse(lg = "", sm = "")
+    private val ingredientResponseList = IngredientResponse(id = 0, img = "", name = "")
+
+    val fakeResponse = listOf(
+        BurgerResponse(
+            desc = "Lorem ispum",
+            id = 0,
+            imagesResponse = listOf(imageResponseList),
+            ingredientsResponse = listOf(ingredientResponseList),
+            name = "lorem ispum",
+            price = 10.98f,
+            veg = false
+
+        )
+    )
 
     @Before
     fun setUp() {
@@ -29,27 +44,32 @@ class BurgerRepositoryTest {
     @Test
     fun `test getBurgers returns list of burgers`() = runTest {
 
-        val imageResponseList = ImageResponse(lg = "", sm = "")
-        val ingredientResponseList = IngredientResponse(id = 0, img = "", name = "")
-
-        val fakeResponse = listOf(
-            BurgerResponse(
-                desc = "Lorem ispum",
-                id = 0,
-                imagesResponse = listOf(imageResponseList),
-                ingredientsResponse = listOf(ingredientResponseList),
-                name = "lorem ispum",
-                price = 10.98f,
-                veg = false
-
-            )
-        )
-
         coEvery { serviceAPI.getBurgers() } returns fakeResponse
 
         val result = burgerRepository.getBurgers()
 
         assertEquals(fakeResponse, result)
+
+    }
+
+    @Test
+    fun `test getBurgersById returns a Burger for Id`() = runTest {
+
+        val fakeBurgerResponse = BurgerResponse(
+            desc = "Lorem ispum",
+            id = 0,
+            imagesResponse = listOf(imageResponseList),
+            ingredientsResponse = listOf(ingredientResponseList),
+            name = "lorem ispum",
+            price = 10.98f,
+            veg = false
+        )
+
+        coEvery { serviceAPI.getBurgersById(1) } returns fakeBurgerResponse
+
+        val resultBurgerById = burgerRepository.getBurgersById(1)
+
+        assertEquals(fakeBurgerResponse, resultBurgerById)
 
     }
 
